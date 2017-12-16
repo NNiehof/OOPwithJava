@@ -1,7 +1,7 @@
 public class Multiplication {
 
     public static void main(String[] args) {
-        // Print quotient of two numbers
+        // Print product of two numbers
 
         int a = 1337;
         int b = 42;
