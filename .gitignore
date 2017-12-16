@@ -2,6 +2,6 @@
 *
 # whitelist all subdirs except /test
 !*/
-*/test
+*/*/test
 !*.java
-week1-000.Sandbox/src/Application.java
+*/week1-000.Sandbox/src/Application.java
