@@ -1,5 +1,6 @@
 # ignore all except java source code in subdirs
 *
+!OOPwithJava-PART1-certificate.pdf
 # whitelist all subdirs except /test
 !*/
 */*/test
