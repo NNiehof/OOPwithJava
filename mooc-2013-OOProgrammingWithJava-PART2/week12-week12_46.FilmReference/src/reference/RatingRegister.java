@@ -70,6 +70,15 @@ public class RatingRegister {
         return this.ratings;
     }
 
+    public List<Film> getFilmNames() {
+        List<Film> films = new ArrayList<Film>();
+        Iterator<Film> iterator = this.ratings.keySet().iterator();
+        while (iterator.hasNext()) {
+            films.add(iterator.next());
+        }
+        return films;
+    }
+
     public List<Person> reviewers() {
         ArrayList<Person> persons = new ArrayList<Person>();
 
@@ -77,10 +86,5 @@ public class RatingRegister {
             persons.add(person);
         }
         return persons;
-//        Iterator<Person> iterator = this.personalRatings.entrySet().iterator();
-//
-//        while (iterator.hasNext()) {
-//            persons.add(iterator.next());
-//        }
     }
 }

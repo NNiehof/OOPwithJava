@@ -1,9 +1,13 @@
 package reference;
 
 
+import reference.comparator.FilmComparator;
+import reference.comparator.PersonComparator;
 import reference.domain.Film;
 import reference.domain.Person;
 import reference.domain.Rating;
+
+import java.util.*;
 
 public class Main {
 
@@ -11,19 +15,23 @@ public class Main {
         RatingRegister ratings = new RatingRegister();
 
         Film goneWithTheWind = new Film("Gone with the Wind");
+        Film theBridgesOfMadisonCounty = new Film("The Bridges of Madison County");
         Film eraserhead = new Film("Eraserhead");
 
         Person matti = new Person("Matti");
         Person pekka = new Person("Pekka");
+        Person mikke = new Person("Mikke");
 
         ratings.addRating(matti, goneWithTheWind, Rating.BAD);
+        ratings.addRating(matti, theBridgesOfMadisonCounty, Rating.GOOD);
         ratings.addRating(matti, eraserhead, Rating.FINE);
 
-        ratings.addRating(pekka, goneWithTheWind, Rating.GOOD);
-        ratings.addRating(pekka, eraserhead, Rating.GOOD);
+        ratings.addRating(pekka, goneWithTheWind, Rating.FINE);
+        ratings.addRating(pekka, theBridgesOfMadisonCounty, Rating.BAD);
+        ratings.addRating(pekka, eraserhead, Rating.MEDIOCRE);
 
-        System.out.println("Ratings for Eraserhead: " + ratings.getRatings(eraserhead));
-        System.out.println("Matti's ratings: " + ratings.getPersonalRatings(matti));
-        System.out.println("Reviewers: " + ratings.reviewers());
+        Reference ref = new Reference(ratings);
+        Film recommended = ref.recommendFilm(mikke);
+        System.out.println("The film recommended to Michael is: " + recommended);
     }
 }
