@@ -79,6 +79,16 @@ public class RatingRegister {
         return films;
     }
 
+    public List<Film> getPersonalFilmNames(Person person) {
+        List<Film> films = new ArrayList<Film>();
+        Map<Film, Rating> personalFilmRatings = this.personalRatings.get(person);
+        Iterator<Film> iterator = personalFilmRatings.keySet().iterator();
+        while (iterator.hasNext()) {
+            films.add(iterator.next());
+        }
+        return films;
+    }
+
     public List<Person> reviewers() {
         ArrayList<Person> persons = new ArrayList<Person>();
 
