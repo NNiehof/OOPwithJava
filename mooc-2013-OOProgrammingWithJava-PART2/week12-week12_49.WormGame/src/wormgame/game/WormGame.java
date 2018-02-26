@@ -7,7 +7,6 @@ import java.util.Random;
 import javax.swing.Timer;
 import wormgame.Direction;
 import wormgame.domain.Apple;
-import wormgame.domain.Border;
 import wormgame.domain.Piece;
 import wormgame.domain.Worm;
 import wormgame.gui.Updatable;
@@ -21,7 +20,6 @@ public class WormGame extends Timer implements ActionListener {
     private Worm worm;
     private Apple apple;
     private Random random;
-    private Border border;
 
     public WormGame(int width, int height) {
         super(1000, null);
@@ -29,7 +27,6 @@ public class WormGame extends Timer implements ActionListener {
         this.width = width;
         this.height = height;
         this.continues = true;
-        this.border = new Border(0, this.width, 0, this.height);
 
         this.worm = new Worm((this.width / 2), (this.height / 2), Direction.DOWN);
 
@@ -73,9 +70,17 @@ public class WormGame extends Timer implements ActionListener {
             return;
         }
 
+        if (borderCollision()) {
+            this.continues = false;
+            return;
+        }
         this.worm.move();
 
         if (this.worm.runsInto(this.apple)) {
+            if (borderCollision()) {
+                this.continues = false;
+                return;
+            }
             this.worm.grow();
 
             while (true) {
@@ -93,20 +98,39 @@ public class WormGame extends Timer implements ActionListener {
             this.continues = false;
         }
 
-        // check for collisions with border
-        List<Piece> borderPieces = this.border.getBorder();
-        for (Piece borderPiece : borderPieces) {
-            if (this.worm.runsInto(borderPiece)) {
-                this.continues = false;
-                System.out.println();
-                System.out.println("false on piece " + borderPiece);
-                break;
-            }
-        }
-
         updatable.update();
 
         setDelay(1000 / this.worm.getLength());
+    }
+
+    /**
+     * Returns true if a next call to worm.grow would make
+     * the worm collide with the border.
+     * @return
+     */
+    public boolean borderCollision() {
+        Piece head = this.worm.getHead();
+        int x = head.getX();
+        int y = head.getY();
+        Direction dir = this.worm.getDirection();
+
+        if (x == (this.width - 1) & dir == Direction.RIGHT) {
+            return true;
+        }
+
+        if (x == 0 & dir == Direction.LEFT) {
+            return true;
+        }
+
+        if (y == (this.height - 1) & dir == Direction.DOWN) {
+            return true;
+        }
+
+        if (y == 0 & dir == Direction.UP) {
+            return true;
+        }
+
+        return false;
     }
 
     public Worm getWorm() {

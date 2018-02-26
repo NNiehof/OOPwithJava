@@ -35,14 +35,14 @@ public class DrawingBoard extends JPanel implements Updatable {
         graphics.setColor(Color.BLACK);
         List<Piece> wormSegments = this.wormGame.getWorm().getPieces();
         for (Piece segment : wormSegments) {
-            int x = segment.getX();
-            int y = segment.getY();
-            graphics.fill3DRect((x * pieceLength), (y * pieceLength), pieceLength, pieceLength, true);
+            int x = segment.getX() * pieceLength;
+            int y = segment.getY() * pieceLength;
+            graphics.fill3DRect(x, y, pieceLength, pieceLength, true);
         }
         
         Apple apple = this.wormGame.getApple();
-        int appleX = apple.getX();
-        int appleY = apple.getY();
+        int appleX = apple.getX() * pieceLength;
+        int appleY = apple.getY() * pieceLength;
         graphics.setColor(Color.RED);
         graphics.fillOval(appleX, appleY, pieceLength, pieceLength);
     }

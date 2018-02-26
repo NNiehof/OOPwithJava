@@ -69,8 +69,8 @@ public class Worm {
     }
 
     public boolean runsInto(Piece piece) {
-        for (int segment = 0; segment < (getLength()); segment++) {
-            if (this.segments.get(segment).runsInto(piece)) {
+        for (Piece segment : this.segments) {
+            if (segment.runsInto(piece)) {
                 return true;
             }
         }
@@ -78,10 +78,17 @@ public class Worm {
     }
 
     public boolean runsIntoItself() {
-        Piece head = getHead();
-        for (int segment = 0; segment < (getLength() - 1); segment++) {
-            if (head.runsInto(this.segments.get(segment))) {
-                return true;
+        for (int segmentIndex = 0; segmentIndex < (getLength() - 1); segmentIndex++) {
+
+            // compare segment to all segments but itself
+            for (int compareSegmentIndex = (segmentIndex + 1);
+                 compareSegmentIndex < getLength(); compareSegmentIndex++) {
+
+                Piece firstSegment = this.segments.get(segmentIndex);
+                Piece secondSegment = this.segments.get(compareSegmentIndex);
+                if (firstSegment.runsInto(secondSegment)) {
+                    return true;
+                }
             }
         }
         return false;
